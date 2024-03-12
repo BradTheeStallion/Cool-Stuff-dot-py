@@ -126,3 +126,23 @@ def ValidPlate(prompt):
             continue
         else:
             return PlateNum
+
+def AnimeScroll(Emoji = "(づ｡◕‿‿◕｡)づ", Phrase = "Mo is Tiggety-Boo!"):
+    #I wanted to learn something new (the animation) while reviewing the append function for lists. The values defined are placeholders, another cool option would be calling AnimeScroll(input("Enter any ASCII emoji you want: "), input("Enter any phrase you want to appear with the emoji: ")) to allow user input.
+    import time
+    Frames = []
+    Counter = 0
+    PhraseCounter = 0
+
+    while Counter < 3:
+        Emoji = " " + Emoji
+        Frames.append(Emoji)
+        Counter += 1
+    while 3 <= Counter <= (len(Phrase) + len(Emoji)):
+        Frames.append(Phrase[0:PhraseCounter] + Emoji)
+        Counter += 1
+        PhraseCounter += 1
+
+    for frame in Frames:
+        print("\r" + frame, end="")
+        time.sleep(0.1)
