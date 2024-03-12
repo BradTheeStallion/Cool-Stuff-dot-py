@@ -153,13 +153,19 @@ def ValidInt(prompt):
     #print(MyNum)
     while True:
         UserInput = input(prompt)
-        try:
-            int(UserInput)
-            return UserInput 
-        except:
+        if not UserInput:
             print()
-            print("Error: Value must be a whole number.")
+            print("Error: Field cannot be blank.")
             print()
+            continue
+        else:
+            try:
+                int(UserInput)
+                return UserInput 
+            except:
+                print()
+                print("Error: Value must be a whole number.")
+                print()
             continue
 
 def ValidFloat(prompt):
@@ -168,11 +174,17 @@ def ValidFloat(prompt):
     #print(MyFloat)
     while True:
         UserInput = input(prompt)
-        try:
-            float(UserInput)
-            return UserInput 
-        except:
+        if not UserInput:
             print()
-            print("Error: Value must be a floating point number.")
+            print("Error: Field cannot be blank.")
             print()
             continue
+        else:
+            try:
+                float(UserInput)
+                return UserInput 
+            except:
+                print()
+                print("Error: Value must be a floating point number.")
+                print()
+                continue
