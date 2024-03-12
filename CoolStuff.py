@@ -45,7 +45,7 @@ def Whoops(prompt):
     else:
         return True
 
-def FloatTest(prompt):
+def MoneyFloat(prompt):
     #This function uses regex to ensure that a number is not only a float, but has no more than the two decimal places expected for a monetary value. There were fewer monetary inputs than expected, but we're proud of this and it will definitely be recycled in future code.
     import re
     pattern = r'^\d+(\.\d{1,2})?$'
@@ -146,3 +146,33 @@ def AnimeScroll(Emoji = "(づ｡◕‿‿◕｡)づ", Phrase = "Mo is Tiggety-Bo
     for frame in Frames:
         print("\r" + frame, end="")
         time.sleep(0.1)
+        
+def ValidInt(prompt):
+    #Use example:
+    #MyNum = ValidInt("Number?: ")
+    #print(MyNum)
+    while True:
+        UserInput = input(prompt)
+        try:
+            int(UserInput)
+            return UserInput 
+        except:
+            print()
+            print("Error: Value must be a whole number.")
+            print()
+            continue
+
+def ValidFloat(prompt):
+    #Use example:
+    #MyFloat = ValidFloat("Number?: ")
+    #print(MyFloat)
+    while True:
+        UserInput = input(prompt)
+        try:
+            float(UserInput)
+            return UserInput 
+        except:
+            print()
+            print("Error: Value must be a floating point number.")
+            print()
+            continue
