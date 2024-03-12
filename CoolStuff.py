@@ -73,7 +73,7 @@ def ValidPhone(prompt):
         elif not PhoneNum.isdigit(): 
             print("Error: Phone number must be digits only.")
         else:
-            break
+            return PhoneNum
 
 def ValidPost(prompt):
     #This functions validates postal codes to suit my preferred input format.
@@ -88,7 +88,7 @@ def ValidPost(prompt):
             print("Error: Invalid postal code.")
             continue
         else:
-            break
+            return PostCode
     
 def ValidProv(prompt):
     #This functions validates province abbreviations to suit my preferred input format.
@@ -106,7 +106,7 @@ def ValidProv(prompt):
             print()
             print("Error: Province must be two letters (XX).")
         else:
-            break
+            return Province
 
 def ValidPlate(prompt):
     #This functions validates licence plates to suit my preferred input format.
@@ -125,4 +125,4 @@ def ValidPlate(prompt):
             print("Error: Customer plate number must be three letters followed by three numbers.")
             continue
         else:
-            break
+            return PlateNum
