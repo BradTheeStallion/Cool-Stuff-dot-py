@@ -114,15 +114,15 @@ def ValidPlate(prompt):
         PlateNum = input(prompt).upper()
         if not PlateNum:
             print()
-            print("Error: Customer plate number cannot be blank.")
+            print("Error: Plate number cannot be blank.")
             continue
         elif len(PlateNum) != 6:
             print()
-            print("Error: Customer plate number must be six characters.")
+            print("Error: Plate number must be six characters.")
             continue
         elif not PlateNum[0:3].isalpha() or not PlateNum[3:].isdigit():
             print()
-            print("Error: Customer plate number must be three letters followed by three numbers.")
+            print("Error: Plate number must be three letters followed by three numbers.")
             continue
         else:
             return PlateNum
