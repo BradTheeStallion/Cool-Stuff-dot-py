@@ -45,16 +45,24 @@ def Whoops(prompt):
     else:
         return True
 
+def NotBlank(UserInput):
+    #Just a little function to make sure a field isn't blank. This is incorporated in several functions in this library.
+        if not UserInput:
+            print()
+            print("Error: Field cannot be blank.")
+            print()
+            return False
+        else:
+            return UserInput
+
 def MoneyFloat(prompt):
     #This function uses regex to ensure that a number is not only a float, but has no more than the two decimal places expected for a monetary value. There were fewer monetary inputs than expected, but we're proud of this and it will definitely be recycled in future code.
     import re
     pattern = r'^\d+(\.\d{1,2})?$'
     while True:
-        UserFloat = input(prompt)
+        UserFloat = NotBlank(input(prompt))
         if not UserFloat:
-            print()
-            print("Error: cannot be blank.")
-            print()
+            continue
         elif not re.match(pattern, UserFloat):
             print()
             print("Error: Please double check your value.")
@@ -65,65 +73,64 @@ def MoneyFloat(prompt):
 def ValidPhone(prompt):
     #This functions validates phone numbers to suit my preferred input format.
     while True:
-        PhoneNum = input(prompt)
+        PhoneNum = NotBlank(input(prompt))
         if not PhoneNum:
-            print("Error: Phone number cannot be blank.")
-        elif len(PhoneNum) != 10:  
+            continue
+        elif len(PhoneNum) != 10:
+            print()
             print("Error: Phone number must be 10 digits.")
-        elif not PhoneNum.isdigit(): 
+            print()
+        elif not PhoneNum.isdigit():
+            print()
             print("Error: Phone number must be digits only.")
+            print()
         else:
             return PhoneNum
 
 def ValidPost(prompt):
     #This functions validates postal codes to suit my preferred input format.
     while True:
-        PostCode = input(prompt).upper()
+        PostCode = NotBlank(input(prompt).upper())
         if not PostCode:
-            print()
-            print("Error: Postal code cannot be blank.")
             continue
         elif len(PostCode) != 6 or not PostCode[0].isalpha() or not PostCode[2].isalpha() or not PostCode[4].isalpha() or not PostCode[1].isdigit() or not PostCode[3].isdigit() or not PostCode[5].isdigit():
             print()
             print("Error: Invalid postal code.")
-            continue
+            print()
         else:
             return PostCode
     
 def ValidProv(prompt):
     #This functions validates province abbreviations to suit my preferred input format.
     while True:
-        Province = input(prompt).upper()
+        Province = NotBlank(input(prompt).upper())
         if not Province:
-            print()
-            print("Error: Province cannot be blank.")
             continue
         elif len(Province) != 2:
             print()
             print("Error: Province must be two characters (XX).")
-            continue
+            print()
         elif not Province.isalpha():
             print()
             print("Error: Province must be two letters (XX).")
+            print()
         else:
             return Province
 
 def ValidPlate(prompt):
     #This functions validates licence plates to suit my preferred input format.
     while True:
-        PlateNum = input(prompt).upper()
+        PlateNum = NotBlank(input(prompt).upper())
         if not PlateNum:
-            print()
-            print("Error: Plate number cannot be blank.")
             continue
         elif len(PlateNum) != 6:
             print()
             print("Error: Plate number must be six characters.")
-            continue
+            print()
         elif not PlateNum[0:3].isalpha() or not PlateNum[3:].isdigit():
             print()
             print("Error: Plate number must be three letters followed by three numbers.")
-            continue
+            print()
         else:
             return PlateNum
 
@@ -152,11 +159,8 @@ def ValidInt(prompt):
     #MyNum = ValidInt("Number?: ")
     #print(MyNum)
     while True:
-        UserInput = input(prompt)
+        UserInput = NotBlank(input(prompt))
         if not UserInput:
-            print()
-            print("Error: Field cannot be blank.")
-            print()
             continue
         else:
             try:
@@ -173,11 +177,8 @@ def ValidFloat(prompt):
     #MyFloat = ValidFloat("Number?: ")
     #print(MyFloat)
     while True:
-        UserInput = input(prompt)
+        UserInput = NotBlank(input(prompt))
         if not UserInput:
-            print()
-            print("Error: Field cannot be blank.")
-            print()
             continue
         else:
             try:
