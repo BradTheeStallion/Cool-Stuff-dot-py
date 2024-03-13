@@ -45,12 +45,16 @@ def Whoops(prompt):
     else:
         return True
 
+def Padding(string):
+    #Adds blank lines before and after print statement
+    print()
+    print(string)
+    print()
+
 def NotBlank(UserInput):
     #Just a little function to make sure a field isn't blank. This is incorporated in several functions in this library.
         if not UserInput:
-            print()
-            print("Error: Field cannot be blank.")
-            print()
+            Padding("Error: Field cannot be blank.")
             return False
         else:
             return UserInput
@@ -64,9 +68,7 @@ def MoneyFloat(prompt):
         if not UserFloat:
             continue
         elif not re.match(pattern, UserFloat):
-            print()
-            print("Error: Please double check your value.")
-            print()
+            Padding("Error: Please double check your value.")
         else:
             return float(UserFloat)
         
@@ -77,13 +79,9 @@ def ValidPhone(prompt):
         if not PhoneNum:
             continue
         elif len(PhoneNum) != 10:
-            print()
-            print("Error: Phone number must be 10 digits.")
-            print()
+            Padding("Error: Phone number must be 10 digits.")
         elif not PhoneNum.isdigit():
-            print()
-            print("Error: Phone number must be digits only.")
-            print()
+            Padding("Error: Phone number must be digits only.")
         else:
             return PhoneNum
 
@@ -94,9 +92,7 @@ def ValidPost(prompt):
         if not PostCode:
             continue
         elif len(PostCode) != 6 or not PostCode[0].isalpha() or not PostCode[2].isalpha() or not PostCode[4].isalpha() or not PostCode[1].isdigit() or not PostCode[3].isdigit() or not PostCode[5].isdigit():
-            print()
-            print("Error: Invalid postal code.")
-            print()
+            Padding("Error: Invalid postal code.")
         else:
             return PostCode
     
@@ -107,13 +103,9 @@ def ValidProv(prompt):
         if not Province:
             continue
         elif len(Province) != 2:
-            print()
-            print("Error: Province must be two characters (XX).")
-            print()
+            Padding("Error: Province must be two characters (XX).")
         elif not Province.isalpha():
-            print()
-            print("Error: Province must be two letters (XX).")
-            print()
+            Padding("Error: Province must be two letters (XX).")
         else:
             return Province
 
@@ -124,13 +116,9 @@ def ValidPlate(prompt):
         if not PlateNum:
             continue
         elif len(PlateNum) != 6:
-            print()
-            print("Error: Plate number must be six characters.")
-            print()
+            Padding("Error: Plate number must be six characters.")
         elif not PlateNum[0:3].isalpha() or not PlateNum[3:].isdigit():
-            print()
-            print("Error: Plate number must be three letters followed by three numbers.")
-            print()
+            Padding("Error: Plate number must be three letters followed by three numbers.")
         else:
             return PlateNum
 
@@ -140,7 +128,6 @@ def AnimeScroll(Emoji = "(づ｡◕‿‿◕｡)づ", Phrase = "Mo is Tiggety-Bo
     Frames = []
     Counter = 0
     PhraseCounter = 0
-
     while Counter < 3:
         Emoji = " " + Emoji
         Frames.append(Emoji)
@@ -149,7 +136,6 @@ def AnimeScroll(Emoji = "(づ｡◕‿‿◕｡)づ", Phrase = "Mo is Tiggety-Bo
         Frames.append(Phrase[0:PhraseCounter] + Emoji)
         Counter += 1
         PhraseCounter += 1
-
     for frame in Frames:
         print("\r" + frame, end="")
         time.sleep(0.1)
@@ -167,9 +153,7 @@ def ValidInt(prompt):
                 int(UserInput)
                 return UserInput 
             except:
-                print()
-                print("Error: Value must be a whole number.")
-                print()
+                Padding("Error: Value must be a whole number.")
             continue
 
 def ValidFloat(prompt):
@@ -185,7 +169,5 @@ def ValidFloat(prompt):
                 float(UserInput)
                 return UserInput 
             except:
-                print()
-                print("Error: Value must be a floating point number.")
-                print()
+                Padding("Error: Value must be a floating point number.")
                 continue
