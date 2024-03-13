@@ -2,6 +2,68 @@
 #By Brad Ayers
 #February 2024 - Present
 
+def DataFile(Filename):
+    #This function automates the data file saving process, including a loading bar. Specify the name of the file as an arugment when calling the function.
+    #DataFile("filename.dat")
+    import types
+    import time
+    import random
+    DataList = []
+    AllVars = dict(globals())
+    for Name, Var in AllVars.items():
+        if type(Var) not in [types.ModuleType, types.FunctionType] and not Name.startswith("_"):
+            DataList.append(Var)
+    f = open(Filename, "a")
+    for item in DataList:
+        if item != DataList[-1]:
+            f.write("{},".format(str(item)))
+        else:
+            f.write("{}\n".format(str(item)))
+    f.close()
+    Frames1 = []
+    Frames2 = []
+    Frames3 = []
+    Phrase1 = "Saving: Please Stand By"
+    Phrase2 = "Data Saved Successfully."
+    Counter1 = 0
+    Counter2 = 0
+    Phrase1Counter = 1
+    Phrase2Counter = 0
+    while Counter1 <= len(Phrase1):
+        Frames1.append(Phrase1[0:Phrase1Counter])
+        Counter1 += 1
+        Phrase1Counter += 1
+    for i in range(0,3):
+        for j in range(0,4):
+            Frames1.append(Phrase1 + (j * " ."))    
+    for k in range(0,41):
+        Frames2.append(k * "|")
+    while Counter2 <= len(Phrase2):
+        Frames3.append(Phrase2[0:Phrase2Counter])
+        Counter2 += 1
+        Phrase2Counter += 1
+    for frame in Frames1:
+        print("\r" + frame, end="")
+        time.sleep(0.05)
+    print("\r" + " " * len(Frames1[-1]), end="")
+    LoadingDelay = random.randint(20,34)
+    for frame in Frames2:
+        if frame == Frames2[LoadingDelay]:
+            print("\r" + frame, end="")
+            time.sleep(random.uniform(0.8, 1.1))
+        else:
+            print("\r" + frame, end="")
+            time.sleep(0.1)
+    print("\r" + " " * len(Frames2[-1]), end="")
+    for frame in Frames3:
+        if frame != Frames3[-1]:
+            print("\r" + frame, end="")
+            time.sleep(0.05)
+        else:
+            print("\r" + frame, end="")
+            time.sleep(0.5)
+    print("\r" + " " * len(Frames3[-1]), end="")
+
 def Hst(PriceInput):
     #This little function takes an integer or float as input and calculates the HST, the total with HST, formats both of those values (and the input value) to be receipt-ready, and returns all 5 values. This is designed to be used on value that has already been validated at an earlier step in the code.
     HST_RATE = 0.15
