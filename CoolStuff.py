@@ -28,7 +28,7 @@ def DataFile(Filename):
     Counter1 = 0
     Counter2 = 0
     Phrase1Counter = 1
-    Phrase2Counter = 0
+    Phrase2Counter = 1
     while Counter1 <= len(Phrase1):
         Frames1.append(Phrase1[0:Phrase1Counter])
         Counter1 += 1
