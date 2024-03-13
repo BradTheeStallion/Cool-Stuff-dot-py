@@ -169,5 +169,5 @@ def ValidFloat(prompt):
                 float(UserInput)
                 return UserInput 
             except:
-                Padding("Error: Value must be a floating point number.")
+                Padding("Error: Value must be a number.")
                 continue
