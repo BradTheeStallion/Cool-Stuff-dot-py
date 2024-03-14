@@ -8,7 +8,20 @@ def DataFile(Filename):
     import types
     import time
     import random
+    PHRASE_1 = "Saving: Please Stand By"
+    PHRASE_2 = "Data Saved Successfully."
     DataList = []
+    Frames1 = []
+    Frames2 = []
+    Frames3 = []
+    def FrameLoop(Phrase, FrameList):
+        #Just avoiding repetition within the outer function.
+        Counter1 = 0
+        Counter2 = 1
+        while Counter1 <= len(Phrase):
+            FrameList.append(Phrase[0:Counter2])
+            Counter1 += 1
+            Counter2 += 1
     AllVars = dict(globals())
     for Name, Var in AllVars.items():
         if type(Var) not in [types.ModuleType, types.FunctionType] and not Name.startswith("_"):
@@ -20,50 +33,35 @@ def DataFile(Filename):
         else:
             f.write("{}\n".format(str(item)))
     f.close()
-    Frames1 = []
-    Frames2 = []
-    Frames3 = []
-    Phrase1 = "Saving: Please Stand By"
-    Phrase2 = "Data Saved Successfully."
-    Counter1 = 0
-    Counter2 = 0
-    Phrase1Counter = 1
-    Phrase2Counter = 1
-    while Counter1 <= len(Phrase1):
-        Frames1.append(Phrase1[0:Phrase1Counter])
-        Counter1 += 1
-        Phrase1Counter += 1
+    FrameLoop(PHRASE_1, Frames1)
     for i in range(0,3):
         for j in range(0,4):
-            Frames1.append(Phrase1 + (j * " ."))    
-    for k in range(0,41):
-        Frames2.append(k * "|")
-    while Counter2 <= len(Phrase2):
-        Frames3.append(Phrase2[0:Phrase2Counter])
-        Counter2 += 1
-        Phrase2Counter += 1
+            Frames1.append(PHRASE_1 + (j * " ."))    
+    for i in range(0,41):
+        Frames2.append(i * "|")
+    FrameLoop(PHRASE_2, Frames3)
     for frame in Frames1:
         print("\r" + frame, end="")
-        time.sleep(0.05)
+        time.sleep(0.03)
     print("\r" + " " * len(Frames1[-1]), end="")
     LoadingDelay = random.randint(20,34)
     for frame in Frames2:
         if frame == Frames2[LoadingDelay]:
             print("\r" + frame, end="")
-            time.sleep(random.uniform(0.8, 1.1))
+            time.sleep(random.uniform(0.6, 0.9))
         else:
             print("\r" + frame, end="")
-            time.sleep(0.1)
+            time.sleep(0.05)
     print("\r" + " " * len(Frames2[-1]), end="")
     for frame in Frames3:
         if frame != Frames3[-1]:
             print("\r" + frame, end="")
-            time.sleep(0.05)
+            time.sleep(0.03)
         else:
             print("\r" + frame, end="")
             time.sleep(0.5)
     print("\r" + " " * len(Frames3[-1]), end="")
-
+    
 def Hst(PriceInput):
     #This little function takes an integer or float as input and calculates the HST, the total with HST, formats both of those values (and the input value) to be receipt-ready, and returns all 5 values. This is designed to be used on value that has already been validated at an earlier step in the code.
     HST_RATE = 0.15
