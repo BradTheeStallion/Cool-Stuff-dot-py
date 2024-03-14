@@ -170,6 +170,9 @@ def ValidProv(prompt):
         elif Province == "PQ":
             Province = "QC"
             return Province
+        elif Province == "NF":
+            Province = "NL"
+            return Province
         elif Province not in ProvList:
             Padding(f"Error: Value not recognized as Canadian Province.\n{ProvList}")
         else:
