@@ -130,7 +130,7 @@ def MoneyFloat(prompt):
         elif not re.match(pattern, UserFloat):
             Padding("Error: Please double check your value.")
         else:
-            return float(UserFloat)
+            return float(UserFloat), "${:,.2f}".format(float(UserFloat))
         
 def ValidPhone(prompt):
     #This functions validates phone numbers to suit my preferred input format.
@@ -143,7 +143,7 @@ def ValidPhone(prompt):
         elif not PhoneNum.isdigit():
             Padding("Error: Phone number must be digits only.")
         else:
-            return PhoneNum
+            return PhoneNum, f"({PhoneNum[0:3]}) {PhoneNum[3:6]}-{PhoneNum[6:]}"
 
 def ValidPost(prompt):
     #This functions validates postal codes to suit my preferred input format.
@@ -154,11 +154,12 @@ def ValidPost(prompt):
         elif len(PostCode) != 6 or not PostCode[0].isalpha() or not PostCode[2].isalpha() or not PostCode[4].isalpha() or not PostCode[1].isdigit() or not PostCode[3].isdigit() or not PostCode[5].isdigit():
             Padding("Error: Invalid postal code.")
         else:
-            return PostCode
+            return PostCode, f"{PostCode[0:3]} {PostCode[3:]}"
     
 def ValidProv(prompt):
     #This functions validates province abbreviations to suit my preferred input format.
     while True:
+        ProvList = ["NL", "PE", "NS", "NB", "QC", "ON", "MB", "SK", "AB", "BC", "YT", "NT", "NU"]
         Province = NotBlank(input(prompt).upper())
         if not Province:
             continue
@@ -166,6 +167,11 @@ def ValidProv(prompt):
             Padding("Error: Province must be two characters (XX).")
         elif not Province.isalpha():
             Padding("Error: Province must be two letters (XX).")
+        elif Province == "PQ":
+            Province = "QC"
+            return Province
+        elif Province not in ProvList:
+            Padding(f"Error: Value not recognized as Canadian Province.\n{ProvList}")
         else:
             return Province
 
@@ -180,7 +186,7 @@ def ValidPlate(prompt):
         elif not PlateNum[0:3].isalpha() or not PlateNum[3:].isdigit():
             Padding("Error: Plate number must be three letters followed by three numbers.")
         else:
-            return PlateNum
+            return PlateNum, f"{PlateNum[0:3]} {PlateNum[3:]}"
 
 def AnimeScroll(Emoji = "(づ｡◕‿‿◕｡)づ", Phrase = "Mo is Tiggety-Boo!"):
     #I wanted to learn something new (the animation) while reviewing the append function for lists. The values defined are placeholders, another cool option would be calling AnimeScroll(input("Enter any ASCII emoji you want: "), input("Enter any phrase you want to appear with the emoji: ")) to allow user input.
@@ -227,7 +233,7 @@ def ValidFloat(prompt):
         else:
             try:
                 float(UserInput)
-                return UserInput 
+                return UserInput, "${:,.2f}".format(UserInput)
             except:
                 Padding("Error: Value must be a number.")
                 continue
