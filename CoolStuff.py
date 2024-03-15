@@ -223,7 +223,7 @@ def ValidInt(prompt):
                 return UserInput 
             except:
                 Padding("Error: Value must be a whole number.")
-            continue
+                continue
 
 def ValidFloat(prompt):
     #Use example:
