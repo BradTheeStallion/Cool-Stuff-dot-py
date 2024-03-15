@@ -127,7 +127,7 @@ def ValidNameAdd(prompt):
         if not UserInput:
             continue
         else:
-            return string.capwords(UserInput), UserInput.title
+            return string.capwords(UserInput), UserInput.title()
 
 def MoneyFloat(prompt):
     #This function uses regex to ensure that a number is not only a float, but has no more than the two decimal places expected for a monetary value. There were fewer monetary inputs than expected, but we're proud of this and it will definitely be recycled in future code.
