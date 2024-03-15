@@ -250,3 +250,17 @@ def ValidFloat(prompt):
             except:
                 Padding("Error: Value must be a number.")
                 continue
+
+def ValidYN(Prompt, Choice1 = 'Y', Choice2 = 'N'):
+    #Makes sure user only enters Y or N (or specifications if different is required)
+    while True:
+        UserInput = NotBlank(input(Prompt))
+        if not UserInput:
+            continue
+        else:
+            UserInput = UserInput.upper()
+            if UserInput != Choice1 and UserInput != Choice2:
+                Padding(f"Error: Value must be {Choice1} or {Choice2}.")
+                continue
+            else:
+                return UserInput
