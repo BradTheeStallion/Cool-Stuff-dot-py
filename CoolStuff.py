@@ -111,11 +111,13 @@ def Padding(string):
     print(string)
     print()
 
-def NotBlank(UserInput):
+def NotBlank(Prompt):
     #Just a little function to make sure a field isn't blank. This is incorporated in several functions in this library.
+    while True:
+        UserInput = input(Prompt)
         if not UserInput:
             Padding("Error: Field cannot be blank.")
-            return False
+            continue
         else:
             return UserInput
         
@@ -123,11 +125,11 @@ def ValidNameAdd(Prompt):
     #Makes sure field isn't blank and formats cities to my preference
     import string
     while True:
-        UserInput = NotBlank(input(Prompt))
+        UserInput = NotBlank(Prompt)
         if not UserInput:
             continue
         else:
-            return string.capwords(UserInput), UserInput.title()
+            return string.capwords(UserInput) + ",", UserInput.title()
             
             
 def MoneyFloat(Prompt):
@@ -135,7 +137,7 @@ def MoneyFloat(Prompt):
     import re
     pattern = r'^\d+(\.\d{1,2})?$'
     while True:
-        UserFloat = NotBlank(input(Prompt))
+        UserFloat = NotBlank(Prompt)
         if not UserFloat:
             continue
         elif not re.match(pattern, UserFloat):
@@ -146,7 +148,7 @@ def MoneyFloat(Prompt):
 def ValidPhone(Prompt):
     #This functions validates phone numbers to suit my preferred input format.
     while True:
-        PhoneNum = NotBlank(input(Prompt))
+        PhoneNum = NotBlank(Prompt)
         if not PhoneNum:
             continue
         elif len(PhoneNum) != 10:
@@ -159,7 +161,7 @@ def ValidPhone(Prompt):
 def ValidPost(Prompt):
     #This functions validates postal codes to suit my preferred input format.
     while True:
-        PostCode = NotBlank(input(Prompt))
+        PostCode = NotBlank(Prompt)
         if not PostCode:
             continue
         elif len(PostCode) != 6 or not PostCode[0].isalpha() or not PostCode[2].isalpha() or not PostCode[4].isalpha() or not PostCode[1].isdigit() or not PostCode[3].isdigit() or not PostCode[5].isdigit():
@@ -171,33 +173,27 @@ def ValidProv(Prompt):
     #This functions validates province abbreviations to suit my preferred input format.
     while True:
         ProvList = ["NL", "PE", "NS", "NB", "QC", "ON", "MB", "SK", "AB", "BC", "YT", "NT", "NU"]
-        Province = NotBlank(input(Prompt))
-        if not Province:
-            continue
+        Province = NotBlank(Prompt).upper()
+        if len(Province) != 2:
+            Padding("Error: Province must be two characters (XX).")
+        elif not Province.isalpha():
+            Padding("Error: Province must be two letters (XX).")
+        elif Province == "PQ":
+            Province = "QC"
+            return Province
+        elif Province == "NF":
+            Province = "NL"
+            return Province
+        elif Province not in ProvList:
+            Padding(f"Error: Value not recognized as Canadian Province.\n{ProvList}")
         else:
-            Province = Province.upper()
-            if len(Province) != 2:
-                Padding("Error: Province must be two characters (XX).")
-            elif not Province.isalpha():
-                Padding("Error: Province must be two letters (XX).")
-            elif Province == "PQ":
-                Province = "QC"
-                return Province
-            elif Province == "NF":
-                Province = "NL"
-                return Province
-            elif Province not in ProvList:
-                Padding(f"Error: Value not recognized as Canadian Province.\n{ProvList}")
-            else:
-                return Province
+            return Province
 
 def ValidPlate(Prompt):
     #This functions validates licence plates to suit my preferred input format.
     while True:
-        PlateNum = NotBlank(input(Prompt))
-        if not PlateNum:
-            continue
-        elif len(PlateNum) != 6:
+        PlateNum = NotBlank(Prompt)
+        if len(PlateNum) != 6:
             Padding("Error: Plate number must be six characters.")
         elif not PlateNum[0:3].isalpha() or not PlateNum[3:].isdigit():
             Padding("Error: Plate number must be three letters followed by three numbers.")
@@ -227,43 +223,124 @@ def ValidInt(Prompt):
     #MyNum = ValidInt("Number?: ")
     #print(MyNum)
     while True:
-        UserInput = NotBlank(input(Prompt))
-        if not UserInput:
+        UserInput = NotBlank(Prompt)
+        try:
+            return int(UserInput) 
+        except:
+            Padding("Error: Value must be a whole number.")
             continue
-        else:
-            try:
-                int(UserInput)
-                return UserInput 
-            except:
-                Padding("Error: Value must be a whole number.")
-                continue
 
 def ValidFloat(Prompt):
     #Use example:
     #MyFloat = ValidFloat("Number?: ")
     #print(MyFloat)
     while True:
-        UserInput = NotBlank(input(Prompt))
-        if not UserInput:
+        UserInput = NotBlank(Prompt)
+        try:
+            float(UserInput)
+            return UserInput, "${:,.2f}".format(UserInput)
+        except:
+            Padding("Error: Value must be a number.")
             continue
-        else:
-            try:
-                float(UserInput)
-                return UserInput, "${:,.2f}".format(UserInput)
-            except:
-                Padding("Error: Value must be a number.")
-                continue
             
-def ValidYN(Prompt, Choice1 = 'Y', Choice2 = 'N'):
+def ValidYN(Prompt, Choice1 = 'Y', Choice2 = 'N', *args):
     #Makes sure user only enters Y or N (or specifications if different is required)
     while True:
-        UserInput = NotBlank(input(Prompt))
-        if not UserInput:
-            continue
-        else:
-            UserInput = UserInput.upper()
-            if UserInput != Choice1 and UserInput != Choice2:
+        UserInput = NotBlank(Prompt).upper()
+        if UserInput != Choice1 and UserInput != Choice2 and UserInput not in args:
+            if not args:
                 Padding(f"Error: Value must be {Choice1} or {Choice2}.")
                 continue
             else:
-                return UserInput
+                Padding(f"Error: Value must be {Choice1} or {Choice2} or {' '.join(map(str, args))}.")
+                continue
+        else:
+            return UserInput
+            
+def ValiDate(Prompt):
+    #Returns a date as a string and an object in my preferred format
+    from datetime import datetime
+    AnyKey(Prompt)
+    while True:
+        Year = NotBlank("\nPlease enter the year (####): ")
+        if not Year.isdigit() or len(Year) != 4:
+            Padding("Error: Year must be four digits (####).")
+            continue
+        else:
+            break
+    while True:
+        Month = ValidInt("Please enter the month (1-12): ")
+        if not (1 <= Month <= 12):
+            Padding("Error: Month needs to be a number from 1 to 12.")
+            continue
+        else:
+            break
+    while True:
+        Day = ValidInt("Please enter the day (1-31): ")
+        try:
+            Date = datetime.strptime(f"{Year}-{Month}-{Day}", "%Y-%m-%d").date()
+            return Date, f"{Year}-{Month}-{Day}"
+        except:
+            Padding("Error: Invalid date.")
+            continue
+
+def IntMoreZero(Prompt):
+    #Checks to see if an integer is > 0
+    while True:
+        Num = ValidInt(Prompt)
+        if Num <= 0:
+            Padding("Error: Number cannot be 0 or less.")
+            continue
+        else:
+            return Num
+
+def FloatMoreZero(Prompt):
+    #Checks to see if a float is > 0
+    while True:
+        Num = ValidFloat(Prompt)[0]
+        if Num <= 0:
+            Padding("Error: Number cannot be 0 or less.")
+            continue
+        else:
+            return Num
+
+def MFMoreZero(Prompt):
+    #Checks to see if dollar value is > 0
+    while True:
+        Num = MoneyFloat(Prompt)[0]
+        if Num <= 0:
+            Padding("Error: Number cannot be 0 or less.")
+            continue
+        else:
+            return Num
+        
+def FrstNxtMnth():
+    import datetime
+    if datetime.datetime.now().month < 12:
+        next_month_year = datetime.datetime.now().year
+    else:
+        next_month_year = datetime.datetime.now().year + 1
+    if datetime.datetime.now().month < 12:
+        next_month = datetime.datetime.now().month + 1
+    else:
+        next_month = 1
+    return datetime.datetime(next_month_year, next_month, 1), datetime.datetime(next_month_year, next_month, 1).strftime("%Y-%m-%d")
+
+def UpdateFrstLn(Filename, NewValue):
+    f = open(Filename, 'r')
+    lines = f.readlines()
+    lines[0] = NewValue + '\n'
+    f = open(Filename, 'w')
+    f.writelines(lines)
+    f.close()
+
+def ValidEmail(Prompt):
+    import re
+    EMAIL_REGEX = re.compile(r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b")
+    while True:
+        Email = NotBlank(Prompt)
+        if not EMAIL_REGEX.match(Email):
+            Padding("Error: Invalid format for an email address.")
+            continue
+        else:
+            return Email
