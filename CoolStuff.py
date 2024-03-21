@@ -3,7 +3,7 @@
 #February 2024 - Present
 
 def DataFile(Filename):
-    #This function automates the data file saving process, including a loading bar. Specify the name of the file as an arugment when calling the function.
+    #DataFile needs to be copy-pasted and tailored to the program. The function is designed to save all variables in the global namespace to a file, with the exception of modules and functions. The function also includes a loading bar.
     #DataFile("filename.dat")
     import types
     import time
@@ -274,11 +274,19 @@ def ValiDate(Prompt):
             Padding("Error: Month needs to be a number from 1 to 12.")
             continue
         else:
-            break
+            if len(str(Month)) == 1:
+                Month = f"0{Month}"
+            else:
+                Month = str(Month)
+        break
     while True:
         Day = ValidInt("Please enter the day (1-31): ")
         try:
             Date = datetime.strptime(f"{Year}-{Month}-{Day}", "%Y-%m-%d").date()
+            if len(str(Day)) == 1:
+                Day = f"0{Day}"
+            else:
+                Day = str(Day)
             return Date, f"{Year}-{Month}-{Day}"
         except:
             Padding("Error: Invalid date.")
